@@ -1,0 +1,92 @@
+
+.width_120 {
+	width: 120px;
+}
+
+.width_190 {
+	width: 190px;
+}
+
+.width_40 {
+	width: 40px;
+}
+
+table {
+	border-collapse: separate !important;
+	margin-bottom: 10px !important;
+	width: 470px !important;
+	table-layout: fixed;
+}
+
+table > tbody:first-child {
+	background: #ccc;
+}
+
+tbody.ui-sortable {
+	border-collapse: separate !important;
+}
+
+tbody.ui-sortable > tr:hover {
+	background-color: #eee;
+}
+
+tr[ng-repeat]:hover {
+	cursor: move;
+}
+
+td {
+	border: none !important;
+}
+
+td.width_40 > a {
+	padding-left: 3px !important;
+}
+
+td > input {
+	padding: 2px !important;
+	height: 25px !important;
+	margin: 0 !important;
+}
+
+div.alert {
+	margin-top: 10px;
+	text-align: left;
+}
+
+a:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.border_top_none, tr.border_top_none > td{
+	border-top: none !important;
+}
+
+.a_disabled {
+	pointer-events: none;
+  	opacity: .65;
+}
+
+.sortable_false {
+	pointer-events: none;
+}
+
+.sortable_true {
+	pointer-events: auto;
+}
+
+
+.padding_tr-11 {
+	padding-left: 11px !important;
+
+}
+
+.padding_tr {
+	padding-bottom: 4px !important;
+	padding-top: 5px !important;
+	
+}
+
+.background_color {
+	background-color: #eee !important;
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html ng-app="contactListApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Contact_list</title>
+	<link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">	
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/jquery-ui.min.js"></script>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/sortable.js"></script>
+	<script src="js/app.js"></script>
+</head> 
+<body>
+	<div class="container" ng-controller="contactListCtrl" ng-init="flagAdd=true; flagDisabled=false; flagEdit=-1; first_name = ''; last_name = ''; email = ''">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3" align="center">
+
+				<h1>Contact list</h1>
+
+				<table class="table">
+
+					<tr> 
+						<th class="width_120">First name</th>
+						<th class="width_120">Last name</th>
+						<th class="width_190">Email</th>
+						<th class="width_40">[{{ list.contacts.length }}]</th>
+					</tr>
+
+					<!-- Block display and edit list data -->
+					<tbody ui-sortable ng-model="list.contacts" class="border_top_none" ng-class="{sortable_false: flagDisabled}">
+
+						<tr ng-repeat="contact in list.contacts" ng-class="{background_color: $index == flagEdit}">
+							<td class="width_120 padding_tr-11" ng-hide="$index == flagEdit">{{contact.first_name}}</td>
+							<td class="width_120 padding_tr-11" ng-hide="$index == flagEdit">{{contact.last_name}}</td>
+							<td class="width_190 padding_tr-11" ng-hide="$index == flagEdit">{{contact.email}}</td>
+
+							<!-- td for edit -->
+							<td class="width_120 padding_tr" ng-hide="$index != flagEdit"><input type="text" class="form-control" placeholder="Text input" ng-model="contact.first_name" ng-class="{sortable_true: $index == flagEdit}" ng-change="changeData(contact.first_name, contact.last_name, contact.email)"></td>
+							<td class="width_120 padding_tr" ng-hide="$index != flagEdit"><input type="text" class="form-control" placeholder="Text input" ng-model="contact.last_name" ng-class="{sortable_true: $index == flagEdit}" ng-change="changeData(contact.first_name, contact.last_name, contact.email)"></td>
+							<td class="width_190 padding_tr" ng-hide="$index != flagEdit"><input type="text" class="form-control" placeholder="Text input" ng-model="contact.email" ng-class="{sortable_true: $index == flagEdit}" ng-change="changeData(contact.first_name, contact.last_name, contact.email)"></td>
+							<!-- END -->
+
+							<td class="width_40">
+								<a class="glyphicon glyphicon-edit" title="Edit data" ng-click="setFlagEdit($index)" ng-class="{a_disabled: flagDisabled}"></a>
+							</td>
+							
+						</tr>
+
+					</tbody><!-- END TBODY -->
+
+					<!-- Add a contact block -->
+					<tbody>
+
+						<tr ng-class="{hidden: flagAdd}" class="background_color padding_tr">
+							<td class="width_120 padding_tr"><input type="text" class="form-control" ng-change="changeData(first_name, last_name, email)" placeholder="Text input" ng-model="first_name"></td>
+							<td class="width_120 padding_tr"><input type="text" class="form-control" ng-change="changeData(first_name, last_name, email)" placeholder="Text input" ng-model="last_name"></td>
+							<td class="width_190 padding_tr"><input type="text" class="form-control" ng-change="changeData(first_name, last_name, email)" placeholder="Text input" ng-model="email"></td>
+							<td class="width_40">
+								<a class="glyphicon glyphicon-edit a_disabled" title="Edit data"></a>
+							</td>
+						</tr>
+						
+					</tbody><!-- END TBODY -->
+
+				</table><!-- END TABLE -->
+
+
+				<!-- Control buttons BLOCK -->
+				<ul class="list-inline">
+					
+					<li class="col-md-3 col-md-offset-2">
+						<a ng-click="setFlagAdd(false)" ng-class="{hidden: flagDisabled}"><span class="glyphicon glyphicon-plus"></span> Add </a>
+						<!-- button to save the edited data -->
+						<a ng-click="setFlagEdit(-1)" ng-class="{hidden: flagEdit == -1, a_disabled: !flagBlock}">
+							<span class="glyphicon glyphicon-ok"></span> Save
+						</a>
+						<!-- button for save new contact -->
+						<a ng-click="addNewContact()" ng-class="{hidden: flagAdd, a_disabled: !flagBlock}">
+							<span class="glyphicon glyphicon-ok"></span> Save
+						</a>
+					</li>
+					
+					<li class="col-md-2"></li>
+
+					<li class="col-md-3">
+						<a ng-class="{hidden: flagDisabled}" ng-click="sendData()"><span class="glyphicon glyphicon-globe"></span> Send</a>
+						<!-- button for delete contact -->
+						<a ng-click="deleteContact()" ng-class="{hidden: flagEdit == -1}"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+						<!-- button to cancel adding a contact -->
+						<a ng-click="setFlagAdd(true)" ng-class="{hidden: flagAdd}"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+					</li>
+				</ul><!-- END BLOCK -->
+
+
+				<!-- Alerts send data -->
+				<div class="alert alert-success col-md-6 col-md-offset-3" ng-show="statusSend == 'OK'">
+					<strong>Successfully!</strong> Data sent.
+				</div>
+				<div class="alert alert-warning col-md-8 col-md-offset-2" ng-show="statusSend == 'ERROR'">
+					<strong>Error!</strong> Did not send data. Check your Internet connection.
+				</div>
+				<!-- END -->
+
+			</div><!-- END -->
+		</div><!-- END row -->
+	</div><!-- END container -->
+
+</body>
+</html>
